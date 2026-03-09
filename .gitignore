@@ -1,0 +1,30 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Evidence artifacts
+evidence/**/*.png
+evidence/**/*.jpg
+evidence/**/*.jpeg
+evidence/**/*.gif
+evidence/**/*.mp4
+evidence/**/*.mov
+!evidence/.gitkeep
+
+# Sensitive files
+.env
+.env.*
+*.key
+*.pem
+credentials.*
+
+# Temporary files
+*.tmp
+*.bak
