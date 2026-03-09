@@ -1,5 +1,7 @@
 # testcase-os
 
+> [English](README.md) | **[简体中文](README.zh-CN.md)** | [日本語](README.ja.md)
+
 > 通用测试知识库管理系统。Git 原生、Markdown 优先、Skill 驱动。
 
 testcase-os 帮助 QA 团队使用 Git 和 Markdown 管理测试用例、知识和经验。没有专有数据库，没有供应商锁定——只有与你现有开发工具和 AI 工作流完美配合的纯文本文件。
@@ -186,8 +188,3 @@ Skill 通过 `_system/context-map.yaml` 自动管理上下文加载：
 ## 许可证
 
 MIT 许可证。
-
-## 其他语言
-
-- [English](README.md)
-- [日本語](README.ja.md)

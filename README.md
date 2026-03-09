@@ -1,5 +1,7 @@
 # testcase-os
 
+> **[English](README.md)** | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+
 > A universal test knowledge base management system. Git-native, Markdown-first, Skill-driven.
 
 testcase-os helps QA teams manage test cases, knowledge, and experiences using Git and Markdown. No proprietary databases, no vendor lock-in—just plain text files that work with your existing developer tools and AI workflows.
