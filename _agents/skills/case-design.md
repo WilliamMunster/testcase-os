@@ -1,8 +1,11 @@
-# Skill: Case Design
+---
+name: case-design
+description: Design high-quality test cases from PRD analysis. Use this skill when the user wants to create test cases based on a PRD, generate test case cards for a feature or module, benchmark against industry standards, or extract test points from requirements. Triggers on phrases like "design test cases", "generate cases from PRD", "create test case cards", "extract test points", or any request to turn requirements into structured test cases.
+---
+
+# Case Design
 
 Design high-quality test cases by analyzing PRDs, matching existing common patterns, and benchmarking against industry standards.
-
-- **Trigger Phrases**: "Design test cases based on PRD", "Generate cases for module {module}", "Create test case cards for {feature}"
 
 ## Workflow
 

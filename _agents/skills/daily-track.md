@@ -1,8 +1,11 @@
-# Skill: Daily Track
+---
+name: daily-track
+description: Create or update daily test activity journal by scanning git commits and aggregating statistics. Use this skill when the user wants to log daily testing activities, create a journal entry, track test progress, generate a daily summary, or review what was done today. Triggers on "daily log", "journal", "track activities", "daily summary", "what did I test today", or any request related to daily test activity recording.
+---
+
+# Daily Track
 
 Create or update daily test activity logs by scanning recent git commits or accepting manual input.
-
-- **Trigger Phrases**: "Update daily log", "Create journal for today", "Track my test activities", "Daily summary"
 
 ## Workflow
 

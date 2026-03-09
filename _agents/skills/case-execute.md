@@ -1,8 +1,11 @@
-# Skill: Case Execution
+---
+name: case-execute
+description: Guide step-by-step test case execution, capture evidence (screenshots, logs), and update daily journal. Use this skill when the user wants to execute test cases, run a test suite, perform smoke/regression testing, record pass/fail results, or capture test evidence. Triggers on "execute test case", "run tests", "start execution", "smoke test", "regression test", or any request to walk through test steps and record results.
+---
+
+# Case Execution
 
 Guide step-by-step test execution, capture evidence, and update journal logs.
-
-- **Trigger Phrases**: "Start execution of TC-RPP-001", "Execute {module} test suite", "Run smoke tests"
 
 ## Workflow
 

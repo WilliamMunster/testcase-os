@@ -1,8 +1,11 @@
-# Skill: Search
+---
+name: search
+description: Search test cases and knowledge base by metadata filters (module, priority, risk, status, tags) and full-text content. Use this skill when the user wants to find test cases, filter by priority or risk level, search for specific keywords across the knowledge base, list pending reviews, or query cases by any combination of metadata fields. Triggers on "search cases", "find test cases", "show P0 cases", "list pending", "filter by module", or any test case lookup request.
+---
+
+# Search
 
 Find test cases and business knowledge by filtering metadata and searching content.
-
-- **Trigger Phrases**: "Search test cases", "Find P0 cases in module {module}", "Search for 'payment' related cases", "Show pending cases"
 
 ## Workflow
 

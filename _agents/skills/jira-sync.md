@@ -1,8 +1,11 @@
-# Skill: Jira Sync
+---
+name: jira-sync
+description: Integrate with Jira to pull PRD requirements, create bug tickets, synchronize issue status, and link test cases to Jira tickets via scripts/jira-cli.sh. Use this skill when the user wants to pull a PRD from Jira, file a bug to Jira, sync ticket status, or link a test case to a Jira issue. Triggers on "pull PRD", "create bug", "sync Jira", "link to Jira", any Jira ticket reference (e.g. PROJ-1234), or any request involving Jira integration.
+---
+
+# Jira Sync
 
 Integrate with Jira to pull requirements, create bugs, and synchronize status using `scripts/jira-cli.sh`.
-
-- **Trigger Phrases**: "Pull PRD from PROJ-1234", "Create bug for TC-RPP-001", "Sync PROJ-1234 status", "Link PROJ-1234 and TC-RPP-001"
 
 ## Configuration
 

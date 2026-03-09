@@ -1,8 +1,11 @@
-# Skill: Case Import
+---
+name: case-import
+description: Import test cases from external formats (Gherkin .feature files, Excel, CSV) into testcase-os Markdown cards. Use this skill when the user wants to import, convert, or migrate test cases from other tools or file formats into the knowledge base. Triggers on "import cases", "convert feature file", "import from Excel/CSV", "migrate test cases", or any request involving external test case ingestion.
+---
+
+# Case Import
 
 Import test cases from external formats (Gherkin, Excel) into standard testcase-os Markdown format.
-
-- **Trigger Phrases**: "Import cases from Gherkin", "Convert Excel file to Markdown cases", "Import {file_path} to {module}"
 
 ## Workflow
 
