@@ -1,0 +1,24 @@
+# Sanitization rules for testcase-os
+# Each rule maps a regex pattern to a replacement string.
+
+rules:
+  - name: phone_numbers
+    pattern: '1[3-9]\d{9}'
+    replacement: '[PHONE]'
+
+  - name: email_addresses
+    pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    replacement: '[EMAIL]'
+
+  - name: ip_addresses
+    pattern: '\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b'
+    replacement: '[IP_ADDR]'
+
+  - name: company_names
+    pattern: ''
+    replacement: '[COMPANY]'
+    enabled: false
+
+  - name: internal_urls
+    pattern: 'https?://[a-z]+\.internal\.[a-z]+\.[a-z]+'
+    replacement: '[INTERNAL_URL]'
