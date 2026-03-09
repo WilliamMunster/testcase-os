@@ -44,15 +44,15 @@ graph TD
 ### 3. マルチ CLI コラボレーションアーキテクチャ
 ```mermaid
 graph TD
-    subgraph AI エージェント
+    subgraph Agents["AI エージェント"]
         C[Claude] --- G[Gemini]
         CX[Codex] --- K[Kimi]
         CR[Cursor] --- O[OpenCode]
     end
-    AI エージェント --> HOK[コンテキストフック]
-    HOK --> SI[共有インストラクション]
-    SI --> SKI[コア Skill]
-    SKI --> GIT[Git / Markdown ストレージ]
+    Agents --> HOK["コンテキストフック"]
+    HOK --> SI["共有インストラクション"]
+    SI --> SKI["コア Skill"]
+    SKI --> GIT["Git / Markdown ストレージ"]
 ```
 
 ## クイックスタート

@@ -44,15 +44,15 @@ graph TD
 ### 3. 多 CLI 协作架构
 ```mermaid
 graph TD
-    subgraph AI 智能体
+    subgraph Agents["AI 智能体"]
         C[Claude] --- G[Gemini]
         CX[Codex] --- K[Kimi]
         CR[Cursor] --- O[OpenCode]
     end
-    AI 智能体 --> HOK[上下文钩子]
-    HOK --> SI[共享指令]
-    SI --> SKI[核心 Skill]
-    SKI --> GIT[Git / Markdown 存储]
+    Agents --> HOK["上下文钩子"]
+    HOK --> SI["共享指令"]
+    SI --> SKI["核心 Skill"]
+    SKI --> GIT["Git / Markdown 存储"]
 ```
 
 ## 快速开始
