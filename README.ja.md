@@ -1,260 +1,168 @@
 # testcase-os
 
-> telos アーキテクチャに基づいた汎用テスト知識ベース管理システム。Gitネイティブ、Markdownファースト、Skillドリブン。
+> telos アーキテクチャに基づいた汎用テスト知識ベース管理システム。Git ネイティブ、Markdown ファースト、Skill ドリブン。
 
-## 概要
+testcase-os は、QA チームが Git と Markdown を使用してテストケース、知識、経験を管理するのを支援します。独自のデータベースも、ベンダーロックインもありません——既存の開発ツールや AI ワークフローと連携するプレーンテキストファイルのみです。
 
-testcase-osは、QAチームがGitとMarkdownを使用してテストケース、知識、経験を管理するのに役立ちます。独自のデータベースも、ベンダーロックインもありません—既存の開発者ツールと連動するプレーンテキストファイルだけです。
+## コアアドバンテージ
 
-### 主な機能
+| 機能 | TestRail / Zephyr | TestLink | **testcase-os** |
+|:--- |:--- |:--- |:--- |
+| **コスト** | 高（SaaS/ライセンス） | メンテナンス（サーバー） | **ゼロ（Git ネイティブ）** |
+| **AI 統合** | アドオン/パッシブ | なし | **AI ネイティブ（Skill ドリブン）** |
+| **トレーサビリティ** | 基本的なリンク | 手動 | **ソースとベンチマークエビデンス** |
+| **コラボレーション** | 内部システム | 内部システム | **Git PR と RBAC（telos-team）** |
+| **スケーラビリティ** | ベンダー依存 | プラグインベース | **カスタム Skill/フック/スクリプト** |
+| **データ所有権** | 独自データベース | MySQL/Postgres | **プレーンテキスト Markdown** |
 
-- **Gitネイティブ**: バージョン管理、コラボレーション、監査証跡を内蔵
-- **Markdownファースト**: すべてのテストケースを人間が読めるMarkdownカードとして保存
-- **Skillドリブン**: 自動コンテキストインジェクションなし—明示的なSkillトリガーのみ
-- **知識の再利用**: チェックリスト、パターン、方法論を含むCommonsライブラリ
-- **経験のループ**: インシデントや見逃されたバグを追跡して継続的に改善
-- **業界ベンチマーク**: 競合分析のための組み込みサポート
+## システムワークフロー
+
+### 1. テストケースライフサイクル
+```mermaid
+graph LR
+    PRD[PRD / Jira チケット] --> CD[case-design skill]
+    CD --> REV{ヒューマンレビュー}
+    REV -- 承認 --> EXE[case-execute skill]
+    REV -- 却下 --> CD
+    EXE --> EVI[エビデンス収集]
+    EVI --> JOU[デイリージャーナル]
+```
+
+### 2. 知識再利用ループ
+```mermaid
+graph TD
+    COM[コモンズライブラリ] --> NEW[新規テストケース]
+    EXP[経験/教訓] --> NEW
+    BEN[業界ベンチマーク] --> NEW
+    NEW --> VAL[実行と検証]
+    VAL --> FEED[フィードバック/エスケープ]
+    FEED --> EXP
+```
+
+### 3. マルチ CLI コラボレーションアーキテクチャ
+```mermaid
+graph TD
+    subgraph AI エージェント
+        C[Claude] --- G[Gemini]
+        CX[Codex] --- K[Kimi]
+        CR[Cursor] --- O[OpenCode]
+    end
+    AI エージェント --> HOK[コンテキストフック]
+    HOK --> SI[共有インストラクション]
+    SI --> SKI[コア Skill]
+    SKI --> GIT[Git / Markdown ストレージ]
+```
 
 ## クイックスタート
 
 ### 1. リポジトリのクローン
-
 ```bash
 git clone https://github.com/your-org/testcase-os.git
 cd testcase-os
 ```
 
 ### 2. セットアップの実行
-
 ```bash
 bash setup.sh
 ```
 
-これにより、基本的なディレクトリ構造が作成され、設定ファイルが初期化されます。
-
 ### 3. プロジェクトの設定
+`_system/config.yaml` を編集して、プロジェクトメタデータと Jira 統合情報を設定します。
 
-`_system/config.yaml`を編集します：
+## 利用可能な Skill
 
-```yaml
-project:
-  name: "Your Project"
-  team: "QA Team"
+複雑な CLI フラグは不要、自然言語で AI エージェントと対話できます。
 
-jira:
-  url: "https://jira.company.com"
-  project_key: "PROJ"
-
-review_policy:
-  p0_requires_review: true
-  p1_requires_review: true
-  p2_requires_review: false
-  p3_requires_review: false
-```
-
-### 4. Identityの設定
-
-チームとプロジェクト情報を`_system/identity.md`に記入します。
-
-### 5. Skillの使用開始
-
-```bash
-# PRDからテストケースを設計
-kimi-cli skill case-design --prd PRD-2026-001.md
-
-# 今日のテストを記録
-kimi-cli skill daily-track
-
-# テストケースを検索
-kimi-cli skill search --module user --priority P0
-```
+| Skill | インテント/トリガー | 説明 |
+|:--- |:--- |:--- |
+| **case-design** | "この PRD からテストケースを設計" | 要件を分析し、コモンズをマッチングし、業界をベンチマークし、カードを生成します。 |
+| **case-import** | "login.feature からケースをインポート" | Gherkin または Excel 形式を標準 Markdown カードに変換し、サニタイズを行います。 |
+| **case-execute** | "TC-USER-001 をステップバイステップで実行" | ステップを案内し、エビデンスをキャプチャし、デイリージャーナルを更新します。 |
+| **daily-track** | "今日のテストを要約" | アクティビティとコミットをスキャンし、構造化された日次進捗レポートを生成します。 |
+| **search** | "Order モジュールの P0 ケースを検索" | メタデータと全文コンテンツに対してマルチ基準検索を実行します。 |
+| **jira-sync** | "PROJ-1234 から PRD をプル" | 要件を同期し、失敗実行からバグを作成し、ステータスを更新します。 |
 
 ## ディレクトリ構造
 
 ```
 testcase-os/
 ├── _agents/
+│   ├── skills/                # スタンドアロン AI Skill 定義
 │   └── instructions/
-│       └── shared.md          # AIエージェントの指示
+│       └── shared.md          # 共有 AI コンテキストと動作
 ├── _system/
-│   ├── identity.md            # チーム/プロジェクトのIdentity
-│   ├── goals.md               # 品質目標とOKR
-│   ├── active-context.md      # 現在のスプリントフォーカス
-│   └── config.yaml            # プロジェクト設定
-├── cases/                     # テストケースライブラリ
-│   ├── _index.md
+│   ├── identity.md            # チームとプロジェクト技術スタック
+│   ├── goals.md               # 品質 OKR と目標
+│   ├── active-context.md      # Sprint フォーカスとブロッカー
+│   └── config.yaml            # グローバルシステム設定
+├── cases/                     # モジュラーなテストケースカード
+│   ├── _index.md              # ケースインベントリと統計
 │   └── {module}/
-│       ├── _module.md
-│       └── TC-{MOD}-{NNN}.md  # テストケースカード
-├── commons/                   # 再利用可能なテスト資産
-│   ├── checklists/            # テストチェックリスト
-│   ├── patterns/              # テストパターン
-│   ├── methodology/           # テスト方法論
-│   └── _index.md
-├── knowledge/                 # ビジネスと技術の知識
-│   ├── domain/                # ビジネスドメイン知識
-│   └── tech/                  # 技術知識
-├── experience/                # 学んだ教訓
-│   ├── incidents/             # 本番インシデント
-│   ├── missed-bugs/           # 見逃されたバグ
-│   ├── techniques/            # テスト技法
-│   └── anti-patterns/         # 一般的な落とし穴
-├── journal/                   # 日次テストログ
-│   └── YYYY-MM-DD.md
-└── scripts/                   # ユーティリティスクリプト
-    ├── jira-cli.sh
-    ├── import-excel.sh
-    └── sanitize.sh
+│       ├── _module.md         # モジュール概要
+│       └── TC-{MOD}-{NNN}.md  # Markdown TC カード
+├── commons/                   # ユニバーサルテストアセット
+│   ├── checklists/            # 再利用可能なチェックリスト
+│   ├── methodology/           # 標準テストアプローチ
+│   └── templates/             # カスタムカードテンプレート
+├── knowledge/                 # ビジネスドメイン知識
+├── experience/                # インシデントポストモーテムと教訓
+├── journal/                   # デイリーアクティビティログ（監査証跡）
+└── scripts/                   # 統合とユーティリティスクリプト
 ```
 
-## 利用可能なSkill
+## テストケースカードフォーマット
 
-### case-design
-業界ベンチマークを含むPRDドキュメントからテストケースを設計します。
-
-```bash
-kimi-cli skill case-design --prd PRD-2026-001.md --module user
-```
-
-### case-import
-GherkinまたはExcelファイルからテストケースをインポートします。
-
-```bash
-kimi-cli skill case-import --file features/login.feature --format gherkin
-kimi-cli skill case-import --file tests.xlsx --format excel
-```
-
-### case-execute
-ステップバイステップのガイダンスでテストケースを実行します。
-
-```bash
-kimi-cli skill case-execute --id TC-USER-001
-```
-
-### daily-track
-日次のテストアクティビティと統計を記録します。
-
-```bash
-kimi-cli skill daily-track --today
-```
-
-### search
-様々な基準でテストケースを検索します。
-
-```bash
-kimi-cli skill search --module user --priority P0
-kimi-cli skill search --tag regression --status active
-```
-
-### jira-sync
-PRDのプルとバグ提出のためにJiraと同期します。
-
-```bash
-kimi-cli skill jira-sync --pull-prd PROJ-1234
-kimi-cli skill jira-sync --create-bug bugs/BUG-001.md
-```
-
-## テストケースカード形式
-
-テストケースはYAMLフロントマターを持つMarkdownファイルとして保存されます：
+標準化されたカードは AI の予測可能性と人間の可読性を確保します：
 
 ```yaml
 ---
-id: TC-USER-001
-title: 有効なデータでのユーザー登録
-module: user
+id: TC-RPP-001
+title: RPP インプレッションログ検証
+module: RPP
 priority: P0
-type: functional
-stage: [smoke, regression]
-status: active
-source: prd
-source_ref: "PRD-2026-001 Section 3.2"
-review: pending
 risk: high
-risk_reason: "コアユーザージャーニー"
-author: qa-engineer
+source: prd
+source_ref: "PRD-2026-003 Section 4.2"
+benchmark_ref: "Google Ads インプレッショントラッキング"
+review: pending
+status: active
+tags: [log, regression]
+author: william
 created: 2026-03-09
-updated: 2026-03-09
-tags: [registration, smoke, positive]
 ---
 
-# 有効なデータでのユーザー登録
-
-## 背景
-新規ユーザーはメールとパスワードで登録できなければなりません。
+# RPP インプレッションログ検証
 
 ## 前提条件
-- ユーザーは登録ページにいる
-- メールはまだ登録されていない
+- Staging 環境が有効
+- ログテーリングがアクティブ
 
 ## テストステップ
-
-| # | ステップ | 入力データ | 期待結果 |
-|---|----------|------------|----------|
-| 1 | メールを入力 | user@test.com | メールが受け入れられる |
-| 2 | パスワードを入力 | SecurePass123 | パスワードがマスクされ、強度が表示される |
-| 3 | 登録をクリック | - | アカウントが作成され、確認メールが送信される |
+| # | ステップ | 入力 | 期待結果 |
+|---|---|---|---|
+| 1 | キーワード検索 | みかん | 結果ページが読み込まれる |
+| 2 | ログを検証 | - | インプレッションログが生成される |
 
 ## 業界ベンチマーク
-> **参考**: 競合Xは24時間以内のメール確認を必要とする
-> **ギャップ**: 当社のPRDはメール確認のタイミングを指定していない
+> **Google Ads**: 1 秒間 50% の可視性を要求。
+> **ギャップ**: 当社の PRD には可視性閾値の定義が欠如。
 ```
-
-### フロントマターフィールド
-
-| フィールド | 必須 | 説明 |
-|-----------|------|------|
-| `id` | はい | 一意の識別子 (TC-{MODULE}-{NNN}) |
-| `title` | はい | テストケースのタイトル |
-| `module` | はい | モジュール名 |
-| `priority` | はい | P0/P1/P2/P3 |
-| `type` | はい | functional/performance/security/compatibility/usability |
-| `source` | はい | prd/commons/benchmark/untracked |
-| `review` | はい | pending/approved/rejected |
-| `risk` | 推奨 | high/medium/low |
-| `tags` | いいえ | タグのリスト |
 
 ## アップグレードパス
 
-### 個人/小規模チーム（現在）
-- 単一リポジトリ
-- 直接ファイル編集
-- Skillベースの対話
+1. **パーソナル/小規模チーム**: 標準 Git フローと共有リポジトリ。
+2. **チーム規模（telos-team）**: `team.yaml` によるマルチエージェントオーケストレーションと RBAC。
+3. **エンタープライズ**: MCP サーバー統合による高性能インデックスとクロスプロジェクトレポート。
 
-### チーム規模（V2）
-- ロールベースの権限のための`team.yaml`
-- 監査ログのためのGitフック
-- MCPサーバー統合
+## コントリビューション
 
-### エンタープライズ（telos-team統合）
-- 集中型ユーザー管理
-- 高度な分析
-- マルチプロジェクトサポート
-
-## 貢献
-
-貢献を歓迎します！詳細は[Contributing Guide](CONTRIBUTING.md)をご覧ください。
-
-### Commonsの追加
-
-1. 適切な`commons/`サブディレクトリにファイルを作成
-2. 英語のファイル名（kebab-case）を使用
-3. 既存の形式に従う
-4. `commons/_index.md`を更新
-
-### Issueの報告
-
-バグの報告や機能のリクエストには[issue tracker](https://github.com/your-org/testcase-os/issues)を使用してください。
+コモンズライブラリへの追加や Skill の改善については、[CONTRIBUTING.md](CONTRIBUTING.md) をご参照ください。
 
 ## ライセンス
 
-MIT License - 詳細は[LICENSE](LICENSE)ファイルをご覧ください。
+MIT ライセンス。**telos** アーキテクチャの原則に基づいて構築されています。
 
 ## 他の言語
 
 - [English](README.md)
 - [简体中文](README.zh-CN.md)
-
----
-
-*telosアーキテクチャの原則で構築。*

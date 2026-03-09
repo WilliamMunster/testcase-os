@@ -2,259 +2,167 @@
 
 > 基于 telos 架构的通用测试知识库管理系统。Git 原生、Markdown 优先、Skill 驱动。
 
-## 概述
+testcase-os 帮助 QA 团队使用 Git 和 Markdown 管理测试用例、知识和经验。没有专有数据库，没有供应商锁定——只有与你现有开发工具和 AI 工作流完美配合的纯文本文件。
 
-testcase-os 帮助 QA 团队使用 Git 和 Markdown 管理测试用例、知识和经验。没有专有数据库，没有供应商锁定——只有与现有开发工具配合使用的纯文本文件。
+## 核心优势
 
-### 核心特性
+| 特性 | TestRail / Zephyr | TestLink | **testcase-os** |
+|:--- |:--- |:--- |:--- |
+| **成本** | 高（SaaS/许可证） | 维护成本（服务器） | **零成本（Git 原生）** |
+| **AI 集成** | 附加组件/被动 | 无 | **AI 原生（Skill 驱动）** |
+| **可追溯性** | 基础链接 | 手动 | **来源与对标证据** |
+| **协作** | 内部系统 | 内部系统 | **Git PR 与 RBAC（telos-team）** |
+| **可扩展性** | 依赖供应商 | 基于插件 | **自定义 Skill/钩子/脚本** |
+| **数据所有权** | 专有数据库 | MySQL/Postgres | **纯文本 Markdown** |
 
-- **Git 原生**: 内置版本控制、协作和审计追踪
-- **Markdown 优先**: 所有测试用例以可读的 Markdown 卡片存储
-- **Skill 驱动**: 无自动上下文注入——仅通过显式 Skill 触发
-- **知识复用**: 包含检查清单、模式和知识方法的 Commons 库
-- **经验闭环**: 追踪事故和遗漏的 Bug 以持续改进
-- **业界对标**: 内置竞品分析支持
+## 系统工作流
+
+### 1. 测试用例生命周期
+```mermaid
+graph LR
+    PRD[PRD / Jira 工单] --> CD[case-design skill]
+    CD --> REV{人工审核}
+    REV -- 通过 --> EXE[case-execute skill]
+    REV -- 驳回 --> CD
+    EXE --> EVI[证据收集]
+    EVI --> JOU[每日日志]
+```
+
+### 2. 知识复用闭环
+```mermaid
+graph TD
+    COM[公共库] --> NEW[新测试用例]
+    EXP[经验/教训] --> NEW
+    BEN[业界对标] --> NEW
+    NEW --> VAL[执行与验证]
+    VAL --> FEED[反馈/漏出]
+    FEED --> EXP
+```
+
+### 3. 多 CLI 协作架构
+```mermaid
+graph TD
+    subgraph AI 智能体
+        C[Claude] --- G[Gemini]
+        CX[Codex] --- K[Kimi]
+        CR[Cursor] --- O[OpenCode]
+    end
+    AI 智能体 --> HOK[上下文钩子]
+    HOK --> SI[共享指令]
+    SI --> SKI[核心 Skill]
+    SKI --> GIT[Git / Markdown 存储]
+```
 
 ## 快速开始
 
 ### 1. 克隆仓库
-
 ```bash
 git clone https://github.com/your-org/testcase-os.git
 cd testcase-os
 ```
 
-### 2. 运行设置
-
+### 2. 运行安装脚本
 ```bash
 bash setup.sh
 ```
 
-这将创建基本的目录结构并初始化配置文件。
-
 ### 3. 配置项目
+编辑 `_system/config.yaml`，设置项目元数据和 Jira 集成信息。
 
-编辑 `_system/config.yaml`：
+## 可用 Skill
 
-```yaml
-project:
-  name: "Your Project"
-  team: "QA Team"
+无需复杂的 CLI 参数，用自然语言与你的 AI 智能体交互。
 
-jira:
-  url: "https://jira.company.com"
-  project_key: "PROJ"
-
-review_policy:
-  p0_requires_review: true
-  p1_requires_review: true
-  p2_requires_review: false
-  p3_requires_review: false
-```
-
-### 4. 设置身份
-
-在 `_system/identity.md` 中填写您的团队和项目信息。
-
-### 5. 开始使用 Skill
-
-```bash
-# 从 PRD 设计测试用例
-kimi-cli skill case-design --prd PRD-2026-001.md
-
-# 记录今天的测试
-kimi-cli skill daily-track
-
-# 搜索测试用例
-kimi-cli skill search --module user --priority P0
-```
+| Skill | 意图/触发词 | 说明 |
+|:--- |:--- |:--- |
+| **case-design** | "从这个 PRD 设计测试用例" | 分析需求、匹配公共库、对标业界、生成卡片。 |
+| **case-import** | "从 login.feature 导入用例" | 将 Gherkin 或 Excel 格式转换为标准 Markdown 卡片，支持脱敏。 |
+| **case-execute** | "逐步执行 TC-USER-001" | 引导你完成步骤、收集证据、更新每日日志。 |
+| **daily-track** | "总结今天的测试工作" | 扫描活动和提交记录，生成结构化的每日进展报告。 |
+| **search** | "查找订单模块的 P0 用例" | 基于元数据和全文内容进行多条件搜索。 |
+| **jira-sync** | "拉取 PROJ-1234 的 PRD" | 同步需求、从失败执行创建 Bug、更新状态。 |
 
 ## 目录结构
 
 ```
 testcase-os/
 ├── _agents/
+│   ├── skills/                # 独立的 AI Skill 定义
 │   └── instructions/
-│       └── shared.md          # AI 代理指令
+│       └── shared.md          # 共享 AI 上下文与行为
 ├── _system/
-│   ├── identity.md            # 团队/项目身份
-│   ├── goals.md               # 质量目标与 OKR
-│   ├── active-context.md      # 当前冲刺焦点
-│   └── config.yaml            # 项目配置
-├── cases/                     # 测试用例库
-│   ├── _index.md
+│   ├── identity.md            # 团队与项目技术栈
+│   ├── goals.md               # 质量 OKR 与目标
+│   ├── active-context.md      # Sprint 焦点与阻塞项
+│   └── config.yaml            # 全局系统配置
+├── cases/                     # 模块化测试用例卡片
+│   ├── _index.md              # 用例清单与统计
 │   └── {module}/
-│       ├── _module.md
-│       └── TC-{MOD}-{NNN}.md  # 测试用例卡片
-├── commons/                   # 可复用测试资产
-│   ├── checklists/            # 测试检查清单
-│   ├── patterns/              # 测试模式
-│   ├── methodology/           # 测试方法论
-│   └── _index.md
-├── knowledge/                 # 业务与技术知识
-│   ├── domain/                # 业务领域知识
-│   └── tech/                  # 技术知识
-├── experience/                # 经验教训
-│   ├── incidents/             # 线上事故
-│   ├── missed-bugs/           # 测试遗漏
-│   ├── techniques/            # 测试技巧
-│   └── anti-patterns/         # 常见陷阱
-├── journal/                   # 每日测试日志
-│   └── YYYY-MM-DD.md
-└── scripts/                   # 实用脚本
-    ├── jira-cli.sh
-    ├── import-excel.sh
-    └── sanitize.sh
-```
-
-## 可用 Skill
-
-### case-design
-从 PRD 文档设计测试用例，包含业界对标。
-
-```bash
-kimi-cli skill case-design --prd PRD-2026-001.md --module user
-```
-
-### case-import
-从 Gherkin 或 Excel 文件导入测试用例。
-
-```bash
-kimi-cli skill case-import --file features/login.feature --format gherkin
-kimi-cli skill case-import --file tests.xlsx --format excel
-```
-
-### case-execute
-通过分步引导执行测试用例。
-
-```bash
-kimi-cli skill case-execute --id TC-USER-001
-```
-
-### daily-track
-记录每日测试活动和统计信息。
-
-```bash
-kimi-cli skill daily-track --today
-```
-
-### search
-按各种条件搜索测试用例。
-
-```bash
-kimi-cli skill search --module user --priority P0
-kimi-cli skill search --tag regression --status active
-```
-
-### jira-sync
-与 Jira 同步以拉取 PRD 和提交 Bug。
-
-```bash
-kimi-cli skill jira-sync --pull-prd PROJ-1234
-kimi-cli skill jira-sync --create-bug bugs/BUG-001.md
+│       ├── _module.md         # 模块概览
+│       └── TC-{MOD}-{NNN}.md  # Markdown 用例卡片
+├── commons/                   # 通用测试资产
+│   ├── checklists/            # 可复用检查清单
+│   ├── methodology/           # 标准测试方法
+│   └── templates/             # 自定义卡片模板
+├── knowledge/                 # 业务领域知识
+├── experience/                # 事故复盘与经验教训
+├── journal/                   # 每日活动日志（审计追踪）
+└── scripts/                   # 集成与实用脚本
 ```
 
 ## 测试用例卡片格式
 
-测试用例以带有 YAML 前置数据的 Markdown 文件存储：
+标准化卡片确保 AI 可预测性和人类可读性：
 
 ```yaml
 ---
-id: TC-USER-001
-title: 使用有效数据注册用户
-module: user
+id: TC-RPP-001
+title: RPP 展示日志验证
+module: RPP
 priority: P0
-type: functional
-stage: [smoke, regression]
-status: active
-source: prd
-source_ref: "PRD-2026-001 Section 3.2"
-review: pending
 risk: high
-risk_reason: "核心用户旅程"
-author: qa-engineer
+source: prd
+source_ref: "PRD-2026-003 Section 4.2"
+benchmark_ref: "Google Ads 展示追踪"
+review: pending
+status: active
+tags: [log, regression]
+author: william
 created: 2026-03-09
-updated: 2026-03-09
-tags: [registration, smoke, positive]
 ---
 
-# 使用有效数据注册用户
-
-## 背景
-新用户必须能够使用邮箱和密码注册。
+# RPP 展示日志验证
 
 ## 前置条件
-- 用户在注册页面
-- 邮箱尚未注册
+- 启用 Staging 环境
+- 开启日志追踪
 
 ## 测试步骤
-
-| # | 步骤 | 输入数据 | 预期结果 |
-|---|------|----------|----------|
-| 1 | 输入邮箱 | user@test.com | 邮箱被接受 |
-| 2 | 输入密码 | SecurePass123 | 密码被掩码，显示强度 |
-| 3 | 点击注册 | - | 账户创建，发送确认邮件 |
+| # | 步骤 | 输入 | 预期结果 |
+|---|---|---|---|
+| 1 | 搜索关键词 | みかん | 结果页加载 |
+| 2 | 验证日志 | - | 生成展示日志 |
 
 ## 业界对标
-> **参考**: 竞品 X 要求 24 小时内完成邮箱验证
-> **差距**: 我们的 PRD 未指定邮箱验证时间
+> **Google Ads**: 要求 50% 可见度持续 1 秒。
+> **差距**: 我们的 PRD 缺少可见度阈值定义。
 ```
-
-### 前置数据字段
-
-| 字段 | 必需 | 说明 |
-|------|------|------|
-| `id` | 是 | 唯一标识符 (TC-{MODULE}-{NNN}) |
-| `title` | 是 | 测试用例标题 |
-| `module` | 是 | 模块名称 |
-| `priority` | 是 | P0/P1/P2/P3 |
-| `type` | 是 | functional/performance/security/compatibility/usability |
-| `source` | 是 | prd/commons/benchmark/untracked |
-| `review` | 是 | pending/approved/rejected |
-| `risk` | 推荐 | high/medium/low |
-| `tags` | 否 | 标签列表 |
 
 ## 升级路径
 
-### 个人/小团队（当前）
-- 单一仓库
-- 直接文件编辑
-- 基于 Skill 的交互
-
-### 团队规模（V2）
-- 用于基于角色的权限的 `team.yaml`
-- 用于审计日志的 Git 钩子
-- MCP 服务器集成
-
-### 企业版（telos-team 集成）
-- 集中式用户管理
-- 高级分析
-- 多项目支持
+1. **个人/小团队**: 标准 Git 工作流与共享仓库。
+2. **团队规模（telos-team）**: 通过 `team.yaml` 实现多智能体编排与 RBAC。
+3. **企业版**: MCP 服务器集成，实现高性能索引与跨项目报表。
 
 ## 贡献
 
-我们欢迎贡献！详情请参阅 [Contributing Guide](CONTRIBUTING.md)。
-
-### 添加 Commons
-
-1. 在适当的 `commons/` 子目录中创建文件
-2. 使用英文文件名（短横线连接）
-3. 遵循现有格式
-4. 更新 `commons/_index.md`
-
-### 报告问题
-
-使用 [issue tracker](https://github.com/your-org/testcase-os/issues) 报告 Bug 或请求功能。
+请参阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解如何为公共库贡献内容或改进 Skill。
 
 ## 许可证
 
-MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
+MIT 许可证。基于 **telos** 架构原则构建。
 
 ## 其他语言
 
 - [English](README.md)
 - [日本語](README.ja.md)
-
----
-
-*基于 telos 架构原则构建。*
