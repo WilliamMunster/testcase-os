@@ -1,0 +1,64 @@
+schema_version: 1
+
+team:
+  name: "example-qa-team"
+  description: "Placeholder RBAC configuration for testcase-os."
+
+members:
+  - id: "qa-lead-1"
+    name: "QA Lead Placeholder"
+    role: "qa-lead"
+    email: "qa-lead@example.com"
+  - id: "qa-engineer-1"
+    name: "QA Engineer Placeholder"
+    role: "qa-engineer"
+    email: "qa-engineer@example.com"
+
+roles:
+  qa-lead:
+    description: "Full ownership of the test knowledge base; PRD remains read-only."
+    permissions:
+      cases/: { read: true, write: true }
+      commons/: { read: true, write: true }
+      knowledge/: { read: true, write: true }
+      experience/: { read: true, write: true }
+      bugs/: { read: true, write: true }
+      docs/: { read: true, write: false }
+      _system/: { read: true, write: true }
+      journal/: { read: true, write: true }
+
+  qa-engineer:
+    description: "Can author cases and knowledge, contribute bugs and experience, and read PRD content."
+    permissions:
+      cases/: { read: true, write: true }
+      commons/: { read: true, write: false }
+      knowledge/: { read: true, write: true }
+      experience/: { read: true, write: true }
+      bugs/: { read: true, write: true }
+      docs/: { read: true, write: false }
+      _system/: { read: true, write: false }
+      journal/: { read: true, write: true }
+
+  developer:
+    description: "Can review shared artifacts, update bug and experience records, and read PRD content."
+    permissions:
+      cases/: { read: true, write: false }
+      commons/: { read: true, write: false }
+      knowledge/: { read: true, write: false }
+      experience/: { read: true, write: true }
+      bugs/: { read: true, write: true }
+      docs/: { read: true, write: false }
+      _system/: { read: true, write: false }
+      journal/: { read: true, write: false }
+
+  pm:
+    description: "Primarily read-only access with PRD stewardship preserved in docs."
+    permissions:
+      cases/: { read: true, write: false }
+      commons/: { read: true, write: false }
+      knowledge/: { read: true, write: false }
+      experience/: { read: true, write: false }
+      bugs/: { read: true, write: false }
+      docs/: { read: true, write: true }
+      _system/: { read: true, write: false }
+      journal/: { read: true, write: false }

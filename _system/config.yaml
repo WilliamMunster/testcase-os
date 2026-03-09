@@ -1,0 +1,25 @@
+# testcase-os configuration
+# Replace placeholder values with your project-specific settings.
+
+project:
+  name: "Example Project"
+  key: "EXAMPLE"
+
+jira:
+  base_url: "https://jira.example.com"
+  project_key: "EXAMPLE"
+
+review:
+  # P0/P1 should still be reviewed manually.
+  auto_approve_p2_p3: false
+  trusted_authors:
+    - "qa-lead@example.com"
+
+id_format:
+  prefix: "TC"
+  separator: "-"
+
+import:
+  default_source: "untracked"
+  default_review: "pending"
+  sanitize_on_import: true
