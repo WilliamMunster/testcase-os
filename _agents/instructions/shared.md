@@ -7,8 +7,8 @@
 
 ## 身份定义 / Identity
 
-testcase-os 是基于 telos 架构的通用测试知识库管理系统：
-> testcase-os is a universal test knowledge base management system based on telos architecture:
+testcase-os 是通用测试知识库管理系统：
+> testcase-os is a universal test knowledge base management system:
 
 - **Git 原生 / Git-Native**: 版本管理、协作、审计全部基于 Git  
   Version control, collaboration, and audit are all Git-based
@@ -103,8 +103,8 @@ tags: []                        # 标签 / Tags
 
 ### 1. Skill 驱动，不自动注入 / Skill-Driven, No Auto-Injection
 
-- 不像 telos 自动加载 session hook，所有操作必须显式触发  
-  Unlike telos auto-loading session hooks, all operations must be explicitly triggered
+- 所有操作必须显式触发，不自动注入上下文
+  All operations must be explicitly triggered, no automatic context injection
 - AI agent 不会主动修改文件，除非用户明确要求使用 skill  
   AI agent will not proactively modify files unless user explicitly requests using a skill
 

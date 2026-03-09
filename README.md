@@ -1,6 +1,6 @@
 # testcase-os
 
-> A universal test knowledge base management system based on the telos architecture. Git-native, Markdown-first, Skill-driven.
+> A universal test knowledge base management system. Git-native, Markdown-first, Skill-driven.
 
 testcase-os helps QA teams manage test cases, knowledge, and experiences using Git and Markdown. No proprietary databases, no vendor lock-in—just plain text files that work with your existing developer tools and AI workflows.
 
@@ -11,7 +11,7 @@ testcase-os helps QA teams manage test cases, knowledge, and experiences using G
 | **Cost** | High (SaaS/License) | Maintenance (Server) | **Zero (Git-native)** |
 | **AI Integration** | Add-on / Passive | None | **AI-Native (Skill-driven)** |
 | **Traceability** | Basic Linking | Manual | **Source & Benchmark Evidence** |
-| **Collaboration** | Internal System | Internal System | **Git PR & RBAC (telos-team)** |
+| **Collaboration** | Internal System | Internal System | **Git PR & RBAC** |
 | **Scalability** | Vendor Dependent | Plugin Based | **Custom Skills/Hooks/Scripts** |
 | **Data Ownership** | Proprietary DB | MySQL/Postgres | **Plain Text Markdown** |
 
@@ -151,11 +151,11 @@ created: 2026-03-09
 ## Upgrade Path
 
 1. **Personal / Small Team**: Standard Git flow with shared repository.
-2. **Team Scale (telos-team)**: Multi-agent orchestration with RBAC via `team.yaml`.
+2. **Team Scale**: Multi-agent orchestration with RBAC via `team.yaml`.
 3. **Enterprise**: MCP server integration for high-performance indexing and cross-project reporting.
 
 ## Contributing
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on adding to the Commons library or improving Skills.
 
 ## License
-MIT License. Built with the **telos** architecture principles.
+MIT License.
