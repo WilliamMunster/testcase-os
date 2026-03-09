@@ -28,3 +28,6 @@ credentials.*
 # Temporary files
 *.tmp
 *.bak
+
+# Internal docs (not published)
+docs/

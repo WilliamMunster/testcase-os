@@ -9,7 +9,13 @@ Design high-quality test cases by analyzing PRDs, matching existing common patte
 
 ## Workflow
 
-Follow these 5 steps precisely:
+Follow these 6 steps precisely:
+
+0.  **加载上下文 / Load Context**:
+    *   读取 `_system/context-map.yaml` 的预算和映射规则。
+    *   根据目标模块的 domain/module tag 匹配相关内容路径。
+    *   按预算限制加载参考文件（优先读取 frontmatter + 要点，前 50 行）。
+    *   Read `_system/context-map.yaml` for budget and mapping rules. Match content paths by target module's domain/module tags. Load reference files within budget (prioritize frontmatter + key points, first 50 lines).
 
 1.  **Extract Test Points**:
     *   Read the provided PRD (Jira ticket, document, or text).
@@ -70,7 +76,7 @@ reviewer: ""
 review_date: ""
 review_note: ""
 jira_ref: ""
-tags: []
+tags: []  # Use category/value format per _system/tag-taxonomy.yaml
 author: {agent_name}
 created: YYYY-MM-DD
 updated: YYYY-MM-DD

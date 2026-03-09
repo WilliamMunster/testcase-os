@@ -1,0 +1,28 @@
+# 标签分类体系 / Tag Taxonomy
+# tags 字段使用 "category/value" 格式
+# 例：domain/ad-rpp, stage/regression, technique/api
+
+categories:
+  domain:
+    description: "业务领域标识，按产品线过滤"
+    values: []     # 用户自定义，如 ad-rpp, ad-se, payment, user
+
+  module:
+    description: "功能模块，与 cases/{module}/ 目录对应"
+    values: []     # 自动从 cases/ 子目录推断
+
+  stage:
+    description: "用例适用的测试阶段"
+    values: [smoke, regression, acceptance, exploratory]
+
+  technique:
+    description: "测试方法或技术分类"
+    values: [boundary, equivalence, state-transition, error-guessing, api, ui, performance, security]
+
+  risk:
+    description: "风险关注点"
+    values: [data-loss, money, compliance, ux-critical, third-party]
+
+  knowledge:
+    description: "知识内容分类（knowledge/ 和 experience/ 目录用）"
+    values: [tech, domain, methodology, postmortem, benchmark]

@@ -79,8 +79,9 @@ bash setup.sh
 | **case-import** | "login.feature からケースをインポート" | Gherkin または Excel 形式を標準 Markdown カードに変換し、サニタイズを行います。 |
 | **case-execute** | "TC-USER-001 をステップバイステップで実行" | ステップを案内し、エビデンスをキャプチャし、デイリージャーナルを更新します。 |
 | **daily-track** | "今日のテストを要約" | アクティビティとコミットをスキャンし、構造化された日次進捗レポートを生成します。 |
-| **search** | "Order モジュールの P0 ケースを検索" | メタデータと全文コンテンツに対してマルチ基準検索を実行します。 |
+| **search** | "Order モジュールの P0 ケースを検索" | メタデータと全文コンテンツに対してマルチ基準検索を実行します。`category/value` タグフィルタリングをサポート。 |
 | **jira-sync** | "PROJ-1234 から PRD をプル" | 要件を同期し、失敗実行からバグを作成し、ステータスを更新します。 |
+| **testrail-sync** | "結果を TestRail に同期" | TestRail とテストケースおよび実行結果を同期します。 |
 
 ## ディレクトリ構造
 
@@ -94,7 +95,9 @@ testcase-os/
 │   ├── identity.md            # チームとプロジェクト技術スタック
 │   ├── goals.md               # 品質 OKR と目標
 │   ├── active-context.md      # Sprint フォーカスとブロッカー
-│   └── config.yaml            # グローバルシステム設定
+│   ├── config.yaml            # グローバルシステム設定
+│   ├── tag-taxonomy.yaml      # 構造化タグカテゴリ（category/value）
+│   └── context-map.yaml       # タグからコンテンツへのマッピングとバジェット制御
 ├── cases/                     # モジュラーなテストケースカード
 │   ├── _index.md              # ケースインベントリと統計
 │   └── {module}/
@@ -126,7 +129,7 @@ source_ref: "PRD-2026-003 Section 4.2"
 benchmark_ref: "Google Ads インプレッショントラッキング"
 review: pending
 status: active
-tags: [log, regression]
+tags: [domain/ad-rpp, stage/regression, technique/api]
 author: william
 created: 2026-03-09
 ---
@@ -147,6 +150,28 @@ created: 2026-03-09
 > **Google Ads**: 1 秒間 50% の可視性を要求。
 > **ギャップ**: 当社の PRD には可視性閾値の定義が欠如。
 ```
+
+## タグシステム
+
+testcase-os は `_system/tag-taxonomy.yaml` で定義された構造化 `category/value` タグを使用します：
+
+| カテゴリ | 説明 | 例 |
+|:--- |:--- |:--- |
+| `domain/` | ビジネスドメイン | `domain/ad-rpp`, `domain/payment` |
+| `module/` | 機能モジュール | `module/RPP`, `module/User` |
+| `stage/` | テストステージ | `stage/smoke`, `stage/regression` |
+| `technique/` | テスト技法 | `technique/api`, `technique/boundary` |
+| `risk/` | リスク関心 | `risk/data-loss`, `risk/money` |
+| `knowledge/` | 知識タイプ | `knowledge/postmortem`, `knowledge/tech` |
+
+## コンテキスト管理
+
+Skill は `_system/context-map.yaml` を通じてコンテキストの読み込みを自動管理します：
+
+1. **バジェット制御**：Skill 呼び出しごとに最大 10 ファイル、ファイルあたり 50 行
+2. **タグベースマッピング**：タグがどのディレクトリを読み込むかを決定（例：`domain/ad-rpp` → `cases/ad-rpp/` + `knowledge/ad-rpp/`）
+3. **優先順位**：cases → knowledge → commons → experience
+4. **Wikilinks**：Obsidian スタイルの `[[wikilinks]]` でクロスドキュメントのトレーサビリティを実現
 
 ## アップグレードパス
 

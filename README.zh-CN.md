@@ -79,8 +79,9 @@ bash setup.sh
 | **case-import** | "从 login.feature 导入用例" | 将 Gherkin 或 Excel 格式转换为标准 Markdown 卡片，支持脱敏。 |
 | **case-execute** | "逐步执行 TC-USER-001" | 引导你完成步骤、收集证据、更新每日日志。 |
 | **daily-track** | "总结今天的测试工作" | 扫描活动和提交记录，生成结构化的每日进展报告。 |
-| **search** | "查找订单模块的 P0 用例" | 基于元数据和全文内容进行多条件搜索。 |
+| **search** | "查找订单模块的 P0 用例" | 基于元数据和全文内容进行多条件搜索。支持 `category/value` 标签过滤。 |
 | **jira-sync** | "拉取 PROJ-1234 的 PRD" | 同步需求、从失败执行创建 Bug、更新状态。 |
+| **testrail-sync** | "同步结果到 TestRail" | 与 TestRail 同步测试用例和执行结果。 |
 
 ## 目录结构
 
@@ -94,7 +95,9 @@ testcase-os/
 │   ├── identity.md            # 团队与项目技术栈
 │   ├── goals.md               # 质量 OKR 与目标
 │   ├── active-context.md      # Sprint 焦点与阻塞项
-│   └── config.yaml            # 全局系统配置
+│   ├── config.yaml            # 全局系统配置
+│   ├── tag-taxonomy.yaml      # 结构化标签分类（category/value）
+│   └── context-map.yaml       # 标签到内容的映射与预算控制
 ├── cases/                     # 模块化测试用例卡片
 │   ├── _index.md              # 用例清单与统计
 │   └── {module}/
@@ -126,7 +129,7 @@ source_ref: "PRD-2026-003 Section 4.2"
 benchmark_ref: "Google Ads 展示追踪"
 review: pending
 status: active
-tags: [log, regression]
+tags: [domain/ad-rpp, stage/regression, technique/api]
 author: william
 created: 2026-03-09
 ---
@@ -147,6 +150,28 @@ created: 2026-03-09
 > **Google Ads**: 要求 50% 可见度持续 1 秒。
 > **差距**: 我们的 PRD 缺少可见度阈值定义。
 ```
+
+## 标签体系
+
+testcase-os 使用结构化 `category/value` 标签，定义在 `_system/tag-taxonomy.yaml`：
+
+| 分类 | 说明 | 示例 |
+|:--- |:--- |:--- |
+| `domain/` | 业务领域 | `domain/ad-rpp`, `domain/payment` |
+| `module/` | 功能模块 | `module/RPP`, `module/User` |
+| `stage/` | 测试阶段 | `stage/smoke`, `stage/regression` |
+| `technique/` | 测试技术 | `technique/api`, `technique/boundary` |
+| `risk/` | 风险关注 | `risk/data-loss`, `risk/money` |
+| `knowledge/` | 知识类型 | `knowledge/postmortem`, `knowledge/tech` |
+
+## 上下文管理
+
+Skill 通过 `_system/context-map.yaml` 自动管理上下文加载：
+
+1. **预算控制**：每次 skill 调用最多 10 个文件，每文件 50 行
+2. **标签映射**：标签决定加载哪些目录（如 `domain/ad-rpp` → `cases/ad-rpp/` + `knowledge/ad-rpp/`）
+3. **优先级顺序**：cases → knowledge → commons → experience
+4. **Wikilinks**：Obsidian 风格 `[[wikilinks]]` 实现跨文档可追溯
 
 ## 升级路径
 

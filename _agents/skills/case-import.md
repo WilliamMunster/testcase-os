@@ -9,6 +9,12 @@ Import test cases from external formats (Gherkin, Excel) into standard testcase-
 
 ## Workflow
 
+0.  **加载上下文 / Load Context**:
+    *   读取 `_system/context-map.yaml` 的预算和映射规则。
+    *   读取 `_system/tag-taxonomy.yaml` 获取可用的标签分类。
+    *   导入时为每个用例分配结构化 tags（从 taxonomy 中选取合适的 `category/value`）。
+    *   Read `_system/context-map.yaml` for budget and mapping rules. Read `_system/tag-taxonomy.yaml` for available tag categories. Assign structured tags to each imported case (select appropriate `category/value` from taxonomy).
+
 1.  **Select Import Strategy**:
     *   **Gherkin (.feature)**: Trigger `scripts/import-gherkin.sh` to parse feature files into MD cards.
     *   **Excel/CSV**: Trigger `scripts/import-excel.sh` (planned V2 placeholder). Use manual mapping if needed.
@@ -33,6 +39,11 @@ Import test cases from external formats (Gherkin, Excel) into standard testcase-
 *   Set `source: untracked` (must be manually updated by user).
 *   Set `review: pending`.
 *   Assign new IDs if the source doesn't have compatible ones.
+*   Assign structured tags from `_system/tag-taxonomy.yaml`:
+    *   `domain/{value}` — infer from source filename or prompt user.
+    *   `module/{value}` — match target module directory.
+    *   `stage/regression` — default stage unless specified.
+    *   `technique/{value}` — infer from test content (api, ui, etc.).
 
 ## Example Output
 

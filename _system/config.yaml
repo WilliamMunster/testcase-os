@@ -23,3 +23,7 @@ import:
   default_source: "untracked"
   default_review: "pending"
   sanitize_on_import: true
+
+obsidian:
+  enabled: true
+  vault_path: "."

@@ -9,10 +9,16 @@ Find test cases and business knowledge by filtering metadata and searching conte
 
 ## Workflow
 
+0.  **加载上下文 / Load Context**:
+    *   读取 `_system/context-map.yaml` 的预算和映射规则。
+    *   读取 `_system/tag-taxonomy.yaml` 获取可用的标签分类。
+    *   支持按 `category/value` 格式搜索 tags（如 `domain/ad-rpp`、`stage/smoke`、`technique/api`）。
+    *   Read `_system/context-map.yaml` for budget and mapping rules. Read `_system/tag-taxonomy.yaml` for available tag categories. Support searching tags in `category/value` format.
+
 1.  **Parse Query Parameters**:
     *   **Module**: Filter by directory name in `cases/`.
     *   **Frontmatter Metadata**: Filter by `priority`, `risk`, `source`, `status`, `review`.
-    *   **Tags**: Match specific tags.
+    *   **Tags**: Match specific tags in `category/value` format (e.g., `domain/ad-rpp`, `stage/smoke`). Supports partial match on category prefix.
     *   **Content**: Perform full-text search on case title and body.
 
 2.  **Execute Search**:

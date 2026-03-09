@@ -9,6 +9,12 @@ Guide step-by-step test execution, capture evidence, and update journal logs.
 
 ## Workflow
 
+0.  **加载上下文 / Load Context**:
+    *   读取 `_system/context-map.yaml` 的预算和映射规则。
+    *   根据用例的 tags（如 technique/api、domain/*）加载相关 knowledge（如排查方法、业务知识）。
+    *   按预算限制加载参考文件（优先读取 frontmatter + 要点，前 50 行）。
+    *   Read `_system/context-map.yaml` for budget and mapping rules. Load related knowledge based on case tags (e.g., technique/api, domain/*). Load reference files within budget.
+
 1.  **Read Case Metadata**:
     *   Load the MD card from `cases/{module}/TC-{MOD}-{NNN}.md`.
     *   Verify the `status` is `active` and `review` is `approved`.

@@ -47,9 +47,11 @@ review_date: ""
 review_note: ""
 # Linked Jira issue, test ticket, or execution reference.
 jira_ref: ""
-# Search and grouping tags.
+# Search and grouping tags. Use category/value format per _system/tag-taxonomy.yaml.
 tags:
-  - sample-tag
+  - domain/sample
+  - stage/regression
+  - technique/functional
 # Author or creator of the case.
 author: your-name
 # Creation date in YYYY-MM-DD format.
@@ -82,3 +84,9 @@ Describe the business context, feature intent, and why this test matters.
 ## Notes
 
 - Add implementation notes, follow-up questions, or execution caveats.
+
+## Related
+
+- 相关知识 / Related knowledge：[[相关知识笔记名]]
+- 前置用例 / Prerequisite case：[[TC-MOD-NNN]]
+- 相关经验 / Related experience：[[相关经验笔记名]]

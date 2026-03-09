@@ -1,0 +1,37 @@
+# 上下文映射 / Context Map
+# skill 执行前，根据任务相关的 tags 加载对应路径下的内容
+
+budget:
+  max_files: 10
+  max_lines_per_file: 50
+  priority_order:
+    - cases
+    - knowledge
+    - commons
+    - experience
+
+# tag → 内容路径映射
+mappings:
+  # 按 domain 标签映射
+  "domain/*":
+    cases: "cases/{value}/"
+    knowledge: "knowledge/{value}/"
+
+  # 按 stage 标签映射
+  "stage/smoke":
+    commons: "commons/checklists/smoke-*.md"
+  "stage/regression":
+    commons: "commons/checklists/regression-*.md"
+
+  # 按 technique 标签映射
+  "technique/api":
+    commons: "commons/methodology/api-*.md"
+    patterns: "commons/patterns/api-*.md"
+  "technique/ui":
+    commons: "commons/methodology/ui-*.md"
+
+  # 按 knowledge 标签映射
+  "knowledge/postmortem":
+    experience: "experience/"
+  "knowledge/benchmark":
+    commons: "commons/methodology/benchmark-*.md"

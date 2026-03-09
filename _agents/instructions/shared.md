@@ -21,6 +21,33 @@ testcase-os 是通用测试知识库管理系统：
 
 ---
 
+## 基础设施层 / Infrastructure Layer
+
+### Obsidian CLI
+
+所有 skill 执行文件操作时，优先使用 Obsidian CLI（如可用）：
+> When performing file operations, all skills should prefer Obsidian CLI (if available):
+
+```bash
+OBS="/Applications/Obsidian.app/Contents/MacOS/Obsidian"
+```
+
+| 操作 / Operation | 命令 / Command |
+|------|------|
+| 读取笔记 / Read note | `$OBS read file=<name>` |
+| 搜索内容 / Search content | `$OBS search query=<text>` |
+| 追加日志 / Append to daily | `$OBS daily:append content=<text>` |
+| 查看标签 / List tags | `$OBS tags all counts` |
+| 反链查询 / Backlinks | `$OBS backlinks file=<name>` |
+
+如果 Obsidian CLI 不可用，回退到直接文件操作（Read/Write/Grep 工具）。
+> If Obsidian CLI is unavailable, fall back to direct file operations (Read/Write/Grep tools).
+
+vault_path 配置在 `_system/config.yaml` 的 `obsidian.vault_path`。
+> vault_path is configured in `_system/config.yaml` under `obsidian.vault_path`.
+
+---
+
 ## 可用 Skill 列表 / Available Skills
 
 | Skill | 触发场景 / Trigger | 说明 / Description |
@@ -31,6 +58,7 @@ testcase-os 是通用测试知识库管理系统：
 | **daily-track** | "记录今日测试" / "Log today's testing" | 创建/更新 journal/YYYY-MM-DD.md  <br>Create/Update journal/YYYY-MM-DD.md |
 | **search** | "搜索用例" / "Search test cases" | 按模块/标签/优先级/风险搜索  <br>Search by module/tag/priority/risk |
 | **jira-sync** | "同步 Jira" / "Sync with Jira" | 拉 PRD、提 Bug、同步状态  <br>Pull PRD, file bugs, sync status |
+| **testrail-sync** | "同步 TestRail" / "Sync with TestRail" | 与 TestRail 同步用例和执行结果  <br>Sync cases and results with TestRail |
 
 ---
 
@@ -199,4 +227,37 @@ roles:
 
 ---
 
-*最后更新 / Last Updated: 2026-03-09*
+*最后更新 / Last Updated: 2026-03-10*
+
+---
+
+## 上下文预算 / Context Budget
+
+skill 执行时必须控制加载的内容量，防止上下文爆炸：
+> Skills must control the amount of content loaded during execution to prevent context explosion:
+
+1. 读取 `_system/context-map.yaml` 获取预算限制和映射规则
+   Read `_system/context-map.yaml` for budget limits and mapping rules
+2. 根据当前任务涉及的 tags，查找 mappings 确定需加载的目录
+   Look up mappings based on task-relevant tags to determine directories to load
+3. 只加载匹配路径下的文件，优先读取 frontmatter 和要点（前 50 行）
+   Only load files from matched paths, prioritize frontmatter and key points (first 50 lines)
+4. 超出 max_files 限制时，按 priority_order 裁剪低优先级内容
+   When exceeding max_files limit, trim lower-priority content per priority_order
+5. 如果 context-map 无匹配项，回退到只加载 `_system/active-context.md`
+   If no context-map match, fall back to loading only `_system/active-context.md`
+
+---
+
+## Wikilink 约定 / Wikilink Conventions
+
+testcase-os 使用 Obsidian 风格的 `[[wikilinks]]` 建立文档间关联：
+> testcase-os uses Obsidian-style `[[wikilinks]]` to establish cross-document references:
+
+- 用例引用知识 / Case references knowledge：`参考 [[WDA 通信超时排查方法]]`
+- 用例间关联 / Inter-case link：`前置用例 [[TC-USER-001]]`
+- 知识引用用例 / Knowledge references case：`实际案例 [[TC-RPP-003]]`
+- 模块概览链接 / Module overview link：`所属模块 [[_module]]`
+
+反链查询 / Backlink query：使用 `$OBS backlinks file=<name>` 查找所有引用某文档的笔记，构建可追溯的知识图谱。
+> Use `$OBS backlinks file=<name>` to find all notes referencing a document, building a traceable knowledge graph.
