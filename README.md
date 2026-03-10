@@ -71,6 +71,56 @@ bash setup.sh
 ### 3. Configure Your Project
 Edit `_system/config.yaml` to set your project metadata and Jira integration details.
 
+### 4. Install & Configure Jira CLI (Optional)
+
+The `jira-sync` skill requires [jira-cli](https://github.com/ankitpokhrel/jira-cli). Install and configure it:
+
+```bash
+# macOS
+brew install ankitpokhrel/jira-cli/jira-cli
+
+# or via Go
+go install github.com/ankitpokhrel/jira-cli/cmd/jira@latest
+```
+
+If your Jira Server uses a context path (e.g. `/jira`), verify the API is reachable first:
+
+```bash
+curl -s -H "Authorization: Bearer <YOUR_TOKEN>" https://<YOUR_JIRA_HOST>/jira/rest/api/2/myself
+```
+
+Create the config manually (recommended for Jira Server with bearer auth):
+
+```bash
+mkdir -p ~/.config/.jira
+cat > ~/.config/.jira/.config.yml << 'EOF'
+installation: local
+server: https://<YOUR_JIRA_HOST>/jira
+login: <YOUR_USERNAME>
+project: ""
+board:
+  id: 0
+  name: ""
+  type: ""
+epic:
+  name: customfield_10014
+  link: customfield_10008
+EOF
+```
+
+Set the API token in your shell profile:
+
+```bash
+echo 'export JIRA_API_TOKEN="<YOUR_TOKEN>"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Verify the connection:
+
+```bash
+jira me
+```
+
 ## Available Skills
 
 Instead of complex CLI flags, interact with your AI agents using natural language.
