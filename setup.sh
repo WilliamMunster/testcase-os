@@ -19,7 +19,6 @@ declare -a DIRECTORIES=(
   "_agents/commands"
   "_agents/hooks"
   "cases"
-  "commons/checklist"
   "commons/checklists"
   "commons/patterns"
   "commons/methodology"
@@ -463,11 +462,38 @@ EOF_HOOK
   chmod +x "$hook_file"
 }
 
+link_cursor_skills() {
+  local skills_src="$PROJECT_ROOT/_agents/skills"
+  local cursor_skills="$PROJECT_ROOT/.cursor/skills"
+  local skill_file=""
+  local skill_name=""
+
+  if [[ ! -d "$skills_src" ]]; then
+    return
+  fi
+
+  for skill_file in "$skills_src"/*.md; do
+    [[ -f "$skill_file" ]] || continue
+    skill_name="$(basename "$skill_file" .md)"
+    mkdir -p "$cursor_skills/$skill_name"
+    ln -sf "../../../_agents/skills/${skill_name}.md" "$cursor_skills/$skill_name/SKILL.md"
+  done
+  log_success "Cursor skills linked: $cursor_skills"
+}
+
 write_hooks() {
   local cli_name=""
   mkdir -p "$PROJECT_ROOT/_agents/hooks"
   for cli_name in $ENABLED_CLIS; do
     write_hook_file "$cli_name"
+  done
+
+  # Link skills for Cursor discovery
+  for cli_name in $ENABLED_CLIS; do
+    if [[ "$cli_name" == "cursor" ]]; then
+      link_cursor_skills
+      break
+    fi
   done
 }
 
