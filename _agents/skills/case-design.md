@@ -30,7 +30,7 @@ Follow these 6 steps precisely:
 *   使用 Confluence REST API 搜索与当前 PRD 相关的知识页面：
 
 ```bash
-curl -s -H "Authorization: Bearer $JIRA_API_TOKEN" \
+curl -s -H "Authorization: Bearer $CONFLUENCE_API_TOKEN" \
   "{confluence.base_url}/rest/api/content/search?cql=space={confluence.space_key}+AND+text~'{关键词}'&limit=5&expand=body.view"
 ```
 

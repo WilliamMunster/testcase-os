@@ -8,10 +8,13 @@ project:
 jira:
   base_url: "https://jira.example.com"
   project_key: "EXAMPLE"
+  token_env: "JIRA_API_TOKEN"
 
 confluence:
   base_url: "https://jira.example.com/confluence"
   space_key: "QA"
+  # 环境变量名，与 Jira 分开配置
+  token_env: "CONFLUENCE_API_TOKEN"
 
 review:
   # P0/P1 should still be reviewed manually.
