@@ -13,7 +13,7 @@ categories:
 
   stage:
     description: "用例适用的测试阶段"
-    values: [smoke, regression, acceptance, exploratory]
+    values: [smoke, regression, acceptance, exploratory, review]
 
   technique:
     description: "测试方法或技术分类"

@@ -21,6 +21,13 @@ review:
   auto_approve_p2_p3: false
   trusted_authors:
     - "qa-lead@example.com"
+  ai_review_dimensions:
+    - completeness
+    - correctness
+    - traceability
+    - knowledge_consistency
+    - risk_assessment
+    - compliance
 
 id_format:
   prefix: "TC"

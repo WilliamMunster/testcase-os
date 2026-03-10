@@ -152,6 +152,7 @@ Instead of complex CLI flags, interact with your AI agents using natural languag
 | Skill | Intent / Trigger | Description |
 |:--- |:--- |:--- |
 | **case-design** | "Design test cases from this PRD" | Analyzes requirements, matches commons, benchmarks industry, and generates cards. |
+| **case-review** | "Review test cases" | Multi-dimension review (completeness, correctness, traceability, knowledge consistency, risk, compliance) with report generation. |
 | **case-import** | "Import cases from login.feature" | Converts Gherkin or Excel formats into standard Markdown cards with sanitization. |
 | **knowledge-import** | "Import knowledge from this URL" | Imports business or technical knowledge from various sources into standardized knowledge cards. |
 | **case-execute** | "Execute TC-USER-001 step-by-step" | Guides you through steps, captures evidence, and updates the daily journal. |

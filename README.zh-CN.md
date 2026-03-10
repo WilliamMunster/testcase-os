@@ -152,6 +152,7 @@ curl -s -H "Authorization: Bearer $CONFLUENCE_API_TOKEN" \
 | Skill | 意图/触发词 | 说明 |
 |:--- |:--- |:--- |
 | **case-design** | "从这个 PRD 设计测试用例" | 分析需求、匹配公共库、对标业界、生成卡片。 |
+| **case-review** | "评审测试用例" | 多维度评审（完整性、正确性、来源追溯、知识一致性、风险、规范性），生成评审报告。 |
 | **case-import** | "从 login.feature 导入用例" | 将 Gherkin 或 Excel 格式转换为标准 Markdown 卡片，支持脱敏。 |
 | **knowledge-import** | "从这个 URL 导入知识" | 从多种来源导入业务或技术知识，生成标准化知识卡片。 |
 | **case-execute** | "逐步执行 TC-USER-001" | 引导你完成步骤、收集证据、更新每日日志。 |

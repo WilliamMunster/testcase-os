@@ -39,3 +39,9 @@ mappings:
     experience: "experience/"
   "knowledge/benchmark":
     commons: "commons/methodology/benchmark-*.md"
+
+  # 按 review stage 映射
+  "stage/review":
+    cases: "cases/{value}/"
+    reviews: "reviews/{value}/"
+    knowledge: "knowledge/"
