@@ -31,6 +31,10 @@ mappings:
     commons: "commons/methodology/ui-*.md"
 
   # 按 knowledge 标签映射
+  "knowledge/domain":
+    knowledge: "knowledge/domain/"
+  "knowledge/tech":
+    knowledge: "knowledge/tech/"
   "knowledge/postmortem":
     experience: "experience/"
   "knowledge/benchmark":

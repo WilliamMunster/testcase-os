@@ -58,6 +58,7 @@ vault_path 配置在 `_system/config.yaml` 的 `obsidian.vault_path`。
 | **daily-track** | "记录今日测试" / "Log today's testing" | 创建/更新 journal/YYYY-MM-DD.md  <br>Create/Update journal/YYYY-MM-DD.md |
 | **search** | "搜索用例" / "Search test cases" | 按模块/标签/优先级/风险搜索  <br>Search by module/tag/priority/risk |
 | **jira-sync** | "同步 Jira" / "Sync with Jira" | 拉 PRD、提 Bug、同步状态  <br>Pull PRD, file bugs, sync status |
+| **knowledge-import** | "导入业务知识" / "Import domain knowledge" | 从多种来源导入知识卡片到 knowledge/  <br>Import knowledge cards from various sources into knowledge/ |
 | **testrail-sync** | "同步 TestRail" / "Sync with TestRail" | 与 TestRail 同步用例和执行结果  <br>Sync cases and results with TestRail |
 
 ---

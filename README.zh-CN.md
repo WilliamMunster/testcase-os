@@ -79,6 +79,7 @@ bash setup.sh
 |:--- |:--- |:--- |
 | **case-design** | "从这个 PRD 设计测试用例" | 分析需求、匹配公共库、对标业界、生成卡片。 |
 | **case-import** | "从 login.feature 导入用例" | 将 Gherkin 或 Excel 格式转换为标准 Markdown 卡片，支持脱敏。 |
+| **knowledge-import** | "从这个 URL 导入知识" | 从多种来源导入业务或技术知识，生成标准化知识卡片。 |
 | **case-execute** | "逐步执行 TC-USER-001" | 引导你完成步骤、收集证据、更新每日日志。 |
 | **daily-track** | "总结今天的测试工作" | 扫描活动和提交记录，生成结构化的每日进展报告。 |
 | **search** | "查找订单模块的 P0 用例" | 基于元数据和全文内容进行多条件搜索。支持 `category/value` 标签过滤。 |

@@ -79,6 +79,7 @@ Instead of complex CLI flags, interact with your AI agents using natural languag
 |:--- |:--- |:--- |
 | **case-design** | "Design test cases from this PRD" | Analyzes requirements, matches commons, benchmarks industry, and generates cards. |
 | **case-import** | "Import cases from login.feature" | Converts Gherkin or Excel formats into standard Markdown cards with sanitization. |
+| **knowledge-import** | "Import knowledge from this URL" | Imports business or technical knowledge from various sources into standardized knowledge cards. |
 | **case-execute** | "Execute TC-USER-001 step-by-step" | Guides you through steps, captures evidence, and updates the daily journal. |
 | **daily-track** | "Summarize my testing today" | Scans activities and commits to generate a structured daily progress report. |
 | **search** | "Find P0 cases in the Order module" | Performs multi-criteria search across metadata and full-text content. Supports `category/value` tag filtering. |
