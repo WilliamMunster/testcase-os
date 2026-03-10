@@ -1,0 +1,24 @@
+# testcase-os — Cursor Instructions
+
+See `_agents/instructions/shared.md` for project-wide instructions.
+
+## Skills
+
+Skills are located in `_agents/skills/`. Reference them in chat with `@_agents/skills/<skill-name>.md`.
+
+Available skills:
+- @_agents/skills/case-design.md — Design test cases from PRD
+- @_agents/skills/case-import.md — Import Gherkin/Excel cases
+- @_agents/skills/knowledge-import.md — Import business/tech knowledge
+- @_agents/skills/case-execute.md — Execute test cases step-by-step
+- @_agents/skills/daily-track.md — Log daily testing activities
+- @_agents/skills/search.md — Search test cases
+- @_agents/skills/jira-sync.md — Sync with Jira
+- @_agents/skills/testrail-sync.md — Sync with TestRail
+
+## Context
+
+- @_system/active-context.md — Current sprint focus & blockers
+- @_system/config.yaml — Project configuration
+- @_system/tag-taxonomy.yaml — Tag categories
+- @_system/context-map.yaml — Context loading rules
