@@ -41,15 +41,10 @@ graph TD
     FEED --> EXP
 ```
 
-### 3. 多 CLI 协作架构
+### 3. 架构
 ```mermaid
 graph TD
-    subgraph Agents["AI 智能体"]
-        C[Claude] --- G[Gemini]
-        CX[Codex] --- K[Kimi]
-        CR[Cursor] --- O[OpenCode]
-    end
-    Agents --> HOK["上下文钩子"]
+    CR[Cursor] --> HOK["上下文钩子"]
     HOK --> SI["共享指令"]
     SI --> SKI["核心 Skill"]
     SKI --> GIT["Git / Markdown 存储"]
@@ -120,6 +115,35 @@ source ~/.zshrc
 ```bash
 jira me
 ```
+
+### 5. 配置 Confluence 集成（可选）
+
+`case-design` skill 可以查询 Confluence 知识库获取相关内容。未配置时自动跳过。
+
+编辑 `_system/config.yaml` 设置 Confluence 信息：
+
+```yaml
+confluence:
+  base_url: "https://<YOUR_CONFLUENCE_HOST>/confluence"
+  space_key: "<YOUR_SPACE_KEY>"
+  token_env: "CONFLUENCE_API_TOKEN"
+```
+
+在 shell 配置中设置 API Token：
+
+```bash
+echo 'export CONFLUENCE_API_TOKEN="<YOUR_TOKEN>"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+验证连接：
+
+```bash
+curl -s -H "Authorization: Bearer $CONFLUENCE_API_TOKEN" \
+  "https://<YOUR_CONFLUENCE_HOST>/confluence/rest/api/content/search?cql=space=<YOUR_SPACE_KEY>&limit=1"
+```
+
+> 如果 `CONFLUENCE_API_TOKEN` 为空或未设置，skill 会自动跳过 Confluence 查询，不会报错。
 
 ## 可用 Skill
 

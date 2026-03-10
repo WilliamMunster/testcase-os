@@ -41,15 +41,10 @@ graph TD
     FEED --> EXP
 ```
 
-### 3. マルチ CLI コラボレーションアーキテクチャ
+### 3. アーキテクチャ
 ```mermaid
 graph TD
-    subgraph Agents["AI エージェント"]
-        C[Claude] --- G[Gemini]
-        CX[Codex] --- K[Kimi]
-        CR[Cursor] --- O[OpenCode]
-    end
-    Agents --> HOK["コンテキストフック"]
+    CR[Cursor] --> HOK["コンテキストフック"]
     HOK --> SI["共有インストラクション"]
     SI --> SKI["コア Skill"]
     SKI --> GIT["Git / Markdown ストレージ"]
@@ -120,6 +115,35 @@ source ~/.zshrc
 ```bash
 jira me
 ```
+
+### 5. Confluence 統合の設定（オプション）
+
+`case-design` skill は Confluence ナレッジベースから関連コンテンツを検索できます。未設定の場合は自動的にスキップされます。
+
+`_system/config.yaml` を編集して Confluence 情報を設定します：
+
+```yaml
+confluence:
+  base_url: "https://<YOUR_CONFLUENCE_HOST>/confluence"
+  space_key: "<YOUR_SPACE_KEY>"
+  token_env: "CONFLUENCE_API_TOKEN"
+```
+
+シェル設定に API トークンを設定：
+
+```bash
+echo 'export CONFLUENCE_API_TOKEN="<YOUR_TOKEN>"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+接続を確認：
+
+```bash
+curl -s -H "Authorization: Bearer $CONFLUENCE_API_TOKEN" \
+  "https://<YOUR_CONFLUENCE_HOST>/confluence/rest/api/content/search?cql=space=<YOUR_SPACE_KEY>&limit=1"
+```
+
+> `CONFLUENCE_API_TOKEN` が空または未設定の場合、skill は Confluence クエリを自動的にスキップし、エラーは発生しません。
 
 ## 利用可能な Skill
 
