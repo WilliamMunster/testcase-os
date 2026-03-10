@@ -71,6 +71,56 @@ bash setup.sh
 ### 3. プロジェクトの設定
 `_system/config.yaml` を編集して、プロジェクトメタデータと Jira 統合情報を設定します。
 
+### 4. Jira CLI のインストールと設定（オプション）
+
+`jira-sync` skill には [jira-cli](https://github.com/ankitpokhrel/jira-cli) が必要です。インストールと設定方法：
+
+```bash
+# macOS
+brew install ankitpokhrel/jira-cli/jira-cli
+
+# または Go 経由
+go install github.com/ankitpokhrel/jira-cli/cmd/jira@latest
+```
+
+Jira Server がコンテキストパス（例：`/jira`）を使用している場合、まず API の到達性を確認します：
+
+```bash
+curl -s -H "Authorization: Bearer <YOUR_TOKEN>" https://<YOUR_JIRA_HOST>/jira/rest/api/2/myself
+```
+
+設定ファイルを手動作成（Jira Server + Bearer 認証の場合推奨）：
+
+```bash
+mkdir -p ~/.config/.jira
+cat > ~/.config/.jira/.config.yml << 'EOF'
+installation: local
+server: https://<YOUR_JIRA_HOST>/jira
+login: <YOUR_USERNAME>
+project: ""
+board:
+  id: 0
+  name: ""
+  type: ""
+epic:
+  name: customfield_10014
+  link: customfield_10008
+EOF
+```
+
+シェル設定に API トークンを設定：
+
+```bash
+echo 'export JIRA_API_TOKEN="<YOUR_TOKEN>"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+接続を確認：
+
+```bash
+jira me
+```
+
 ## 利用可能な Skill
 
 複雑な CLI フラグは不要、自然言語で AI エージェントと対話できます。

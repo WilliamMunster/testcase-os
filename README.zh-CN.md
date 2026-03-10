@@ -71,6 +71,56 @@ bash setup.sh
 ### 3. 配置项目
 编辑 `_system/config.yaml`，设置项目元数据和 Jira 集成信息。
 
+### 4. 安装配置 Jira CLI（可选）
+
+`jira-sync` skill 依赖 [jira-cli](https://github.com/ankitpokhrel/jira-cli)，安装和配置方法如下：
+
+```bash
+# macOS
+brew install ankitpokhrel/jira-cli/jira-cli
+
+# 或通过 Go 安装
+go install github.com/ankitpokhrel/jira-cli/cmd/jira@latest
+```
+
+如果你的 Jira Server 使用了 context path（如 `/jira`），先验证 API 可达：
+
+```bash
+curl -s -H "Authorization: Bearer <YOUR_TOKEN>" https://<YOUR_JIRA_HOST>/jira/rest/api/2/myself
+```
+
+手动创建配置文件（推荐用于 Jira Server + Bearer 认证）：
+
+```bash
+mkdir -p ~/.config/.jira
+cat > ~/.config/.jira/.config.yml << 'EOF'
+installation: local
+server: https://<YOUR_JIRA_HOST>/jira
+login: <YOUR_USERNAME>
+project: ""
+board:
+  id: 0
+  name: ""
+  type: ""
+epic:
+  name: customfield_10014
+  link: customfield_10008
+EOF
+```
+
+在 shell 配置中设置 API Token：
+
+```bash
+echo 'export JIRA_API_TOKEN="<YOUR_TOKEN>"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+验证连接：
+
+```bash
+jira me
+```
+
 ## 可用 Skill
 
 无需复杂的 CLI 参数，用自然语言与你的 AI 智能体交互。
