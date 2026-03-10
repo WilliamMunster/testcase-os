@@ -113,7 +113,9 @@ testcase-os/
 ├── knowledge/                 # 业务领域知识
 ├── experience/                # 事故复盘与经验教训
 ├── journal/                   # 每日活动日志（审计追踪）
-└── scripts/                   # 集成与实用脚本
+├── scripts/                   # 集成与实用脚本
+│   └── sync-cursor-skills.sh  # 同步 Skills 到 Cursor（项目级 + 全局）
+└── .cursor/skills/            # 自动生成的 Cursor Skill 发现目录
 ```
 
 ## 测试用例卡片格式

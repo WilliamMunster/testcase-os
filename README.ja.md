@@ -113,7 +113,9 @@ testcase-os/
 ├── knowledge/                 # ビジネスドメイン知識
 ├── experience/                # インシデントポストモーテムと教訓
 ├── journal/                   # デイリーアクティビティログ（監査証跡）
-└── scripts/                   # 統合とユーティリティスクリプト
+├── scripts/                   # 統合とユーティリティスクリプト
+│   └── sync-cursor-skills.sh  # Skill を Cursor に同期（プロジェクト + グローバル）
+└── .cursor/skills/            # 自動生成された Cursor Skill ディスカバリ
 ```
 
 ## テストケースカードフォーマット

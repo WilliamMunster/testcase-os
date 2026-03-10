@@ -113,7 +113,9 @@ testcase-os/
 ├── knowledge/                 # Business domain knowledge
 ├── experience/                # Incident post-mortems & lessons
 ├── journal/                   # Daily activity logs (Audit trail)
-└── scripts/                   # Integration & utility scripts
+├── scripts/                   # Integration & utility scripts
+│   └── sync-cursor-skills.sh  # Sync skills to Cursor (project + global)
+└── .cursor/skills/            # Auto-generated Cursor skill discovery
 ```
 
 ## Test Case Card Format
