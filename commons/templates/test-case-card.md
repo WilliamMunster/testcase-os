@@ -1,92 +1,65 @@
 ---
-# Unique test case identifier following the configured case code format.
-id: TC-MOD-001
-# Human-readable title for the test case.
-title: Replace with test case title
-# Functional module or feature area; typically matches the cases/{module}/ directory.
-module: MOD
-# Business priority: P0 / P1 / P2 / P3.
+# PRD 或功能的 Jira ID 或名称
+prd_ref: "PROJ-001"
+# 功能模块，对应 cases/{module}/ 目录
+module: "MOD"
+# 测试用例集标题
+title: "功能名称 测试用例"
+# 整体优先级: P0 / P1 / P2 / P3
 priority: P1
-# Risk level used for risk-based execution ordering: high / medium / low.
+# 风险等级: high / medium / low
 risk: medium
-# Test type: functional / performance / security / compatibility / usability.
-type: functional
-# Applicable stages such as smoke / regression / acceptance / exploratory.
-stage:
-  - regression
-# Lifecycle status: draft / active / deprecated.
+# 状态: draft / active / deprecated
 status: draft
-# Case revision number; increment when test steps change materially.
-version: 1
-# Whether the case is covered by automation.
-automated: false
-# Path, suite name, or job reference for the automated implementation.
-automation_ref: ""
-# Short summary of prerequisites; put detailed items in the body section as well.
-precondition: ""
-# Linked requirement reference such as a PRD section or Jira ticket.
-requirement_ref: ""
-# Linked design artifact such as Figma / Sketch / Zeplin.
-design_ref: ""
-# Source classification: prd / commons / benchmark / untracked.
+# 来源: prd
 source: prd
-# Concrete source citation such as PRD section, imported file, or commons ID.
-source_ref: ""
-# External benchmark source used to strengthen the case.
-benchmark_ref: ""
-# Missing requirement details discovered during benchmark comparison.
-benchmark_gaps:
+# 关联需求
+requirement_ref: ""
+# Confluence 参考页面
+confluence_refs:
   - ""
-# Review state: pending / approved / rejected.
-review: pending
-# Reviewer name or identifier once reviewed.
-reviewer: ""
-# Review date in YYYY-MM-DD format.
-review_date: ""
-# Reviewer comments or change requests.
-review_note: ""
-# Linked Jira issue, test ticket, or execution reference.
+# 关联 Jira
 jira_ref: ""
-# Search and grouping tags. Use category/value format per _system/tag-taxonomy.yaml.
+# 标签，使用 category/value 格式，参考 _system/tag-taxonomy.yaml
 tags:
   - domain/sample
   - stage/regression
-  - technique/functional
-# Author or creator of the case.
+# 作者
 author: your-name
-# Creation date in YYYY-MM-DD format.
+# 创建日期
 created: YYYY-MM-DD
-# Last updated date in YYYY-MM-DD format.
+# 更新日期
 updated: YYYY-MM-DD
 ---
 
-# Replace with test case title
+# 功能名称 测试用例
 
-## Background
+## 背景
 
-Describe the business context, feature intent, and why this test matters.
+PRD 概要、功能意图、测试范围说明。
 
-## Preconditions
+## 前置条件
 
-- List environment, account, data, or configuration prerequisites.
+- 环境、账号、数据等前提条件
 
-## Test Steps
+## 测试用例
 
-| # | Step | Input Data | Expected Result |
-|---|------|------------|-----------------|
-| 1 | Replace with the first action | Replace with data | Replace with expected result |
-| 2 | Replace with the second action | - | Replace with expected result |
+| # | 用例名称 | 优先级 | 前置条件 | 测试步骤 | 输入数据 | 预期结果 | 来源 | 备注 |
+|---|---------|--------|---------|---------|---------|---------|------|------|
+| 1 | 替换为场景名称 | P0 | 替换为前置条件 | 替换为操作步骤 | 替换为数据 | 替换为预期结果 | prd | - |
+| 2 | 替换为场景名称 | P1 | - | 替换为操作步骤 | - | 替换为预期结果 | commons | - |
 
-## Industry Benchmark
+## Confluence 参考
 
-- Document relevant industry references, comparison notes, and PRD gaps.
+从 Confluence 查询到的相关知识摘要（如无则标注"未查询到相关内容"）。
 
-## Notes
+## PRD 差距
 
-- Add implementation notes, follow-up questions, or execution caveats.
+- **差距 1**: 替换为描述
+- **差距 2**: 替换为描述
 
-## Related
+## 相关
 
-- 相关知识 / Related knowledge：[[相关知识笔记名]]
-- 前置用例 / Prerequisite case：[[TC-MOD-NNN]]
-- 相关经验 / Related experience：[[相关经验笔记名]]
+- PRD: [[PROJ-001]]
+- 知识: [[相关知识笔记名]]
+- 经验: [[相关经验笔记名]]
