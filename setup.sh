@@ -92,7 +92,7 @@ Required environment variables for --non-interactive:
   QA_LEAD_NAME
   QA_LEAD_EMAIL
   AUTO_APPROVE_P2_P3   true|false|y|n
-  ENABLED_CLIS         space-separated list: claude gemini codex kimi cursor
+  ENABLED_CLIS         space-separated list (default: cursor)
 
 Optional environment variables:
   JIRA_URL
@@ -207,17 +207,17 @@ prompt_auto_approve() {
 prompt_clis() {
   local answer=""
   while true; do
-    read -r -p "Enabled AI CLI(s) [claude gemini codex kimi cursor]: " answer
+    read -r -p "Enabled AI CLI(s) (default: cursor): " answer
     answer="$(trim "$answer")"
     if [[ -z "$answer" ]]; then
-      log_error "Select at least one CLI."
-      continue
+      printf 'cursor'
+      return
     fi
     if validate_clis "$answer"; then
       printf '%s' "$answer"
       return
     fi
-    log_error "Unsupported CLI found. Use only: claude gemini codex kimi cursor"
+    log_error "Unsupported CLI found."
   done
 }
 
@@ -237,7 +237,9 @@ load_non_interactive_values() {
   require_non_empty "$TEAM_NAME" "TEAM_NAME"
   require_non_empty "$QA_LEAD_NAME" "QA_LEAD_NAME"
   require_non_empty "$QA_LEAD_EMAIL" "QA_LEAD_EMAIL"
-  require_non_empty "$ENABLED_CLIS" "ENABLED_CLIS"
+  if [[ -z "$ENABLED_CLIS" ]]; then
+    ENABLED_CLIS="cursor"
+  fi
   require_non_empty "$auto_approve_value" "AUTO_APPROVE_P2_P3"
 
   if ! validate_project_key "$PROJECT_KEY"; then
