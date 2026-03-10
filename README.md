@@ -41,15 +41,10 @@ graph TD
     FEED --> EXP
 ```
 
-### 3. Multi-CLI Collaborative Architecture
+### 3. Architecture
 ```mermaid
 graph TD
-    subgraph Agents["AI Agents"]
-        C[Claude] --- G[Gemini]
-        CX[Codex] --- K[Kimi]
-        CR[Cursor] --- O[OpenCode]
-    end
-    Agents --> HOK["Context Hooks"]
+    CR[Cursor] --> HOK["Context Hooks"]
     HOK --> SI[Shared Instructions]
     SI --> SKI[Core Skills]
     SKI --> GIT[Git / Markdown Storage]
