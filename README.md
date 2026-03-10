@@ -44,12 +44,12 @@ graph TD
 ### 3. Multi-CLI Collaborative Architecture
 ```mermaid
 graph TD
-    subgraph AI Agents
+    subgraph Agents["AI Agents"]
         C[Claude] --- G[Gemini]
         CX[Codex] --- K[Kimi]
         CR[Cursor] --- O[OpenCode]
     end
-    AI Agents --> HOK[Context Hooks]
+    Agents --> HOK["Context Hooks"]
     HOK --> SI[Shared Instructions]
     SI --> SKI[Core Skills]
     SKI --> GIT[Git / Markdown Storage]
