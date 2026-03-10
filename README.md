@@ -23,8 +23,10 @@ testcase-os helps QA teams manage test cases, knowledge, and experiences using G
 ```mermaid
 graph LR
     PRD[PRD / Jira Ticket] --> CD(case-design skill)
-    CD --> REV{Human Review}
+    CD --> CR(case-review skill)
+    CR --> REV{Human Confirm}
     REV -- Approved --> EXE(case-execute skill)
+    REV -- Needs Revision --> CD
     REV -- Rejected --> CD
     EXE --> EVI[Evidence Capture]
     EVI --> JOU[Daily Journal]
@@ -35,7 +37,6 @@ graph LR
 graph TD
     COM[Commons Library] --> NEW[New Test Case]
     EXP[Experience / Lessons] --> NEW
-    BEN[Industry Benchmark] --> NEW
     NEW --> VAL[Execution & Validation]
     VAL --> FEED[Feedback / Escapes]
     FEED --> EXP
@@ -144,6 +145,26 @@ curl -s -H "Authorization: Bearer $CONFLUENCE_API_TOKEN" \
 ```
 
 > If `CONFLUENCE_API_TOKEN` is empty or unset, skills will skip Confluence queries without error.
+
+### 6. Configure AI Review (Optional)
+
+The `case-review` skill uses dimensions defined in `_system/config.yaml`. You can customize which dimensions are checked:
+
+```yaml
+review:
+  auto_approve_p2_p3: false
+  trusted_authors:
+    - "qa-lead@example.com"
+  ai_review_dimensions:
+    - completeness
+    - correctness
+    - traceability
+    - knowledge_consistency
+    - risk_assessment
+    - compliance
+```
+
+Review reports are generated in `reviews/{module}/` and linked back to the original case via wikilinks.
 
 ## Available Skills
 
