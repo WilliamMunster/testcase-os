@@ -465,6 +465,7 @@ EOF_HOOK
 link_cursor_skills() {
   local skills_src="$PROJECT_ROOT/_agents/skills"
   local cursor_skills="$PROJECT_ROOT/.cursor/skills"
+  local global_skills="$HOME/.cursor/skills"
   local skill_file=""
   local skill_name=""
 
@@ -475,10 +476,15 @@ link_cursor_skills() {
   for skill_file in "$skills_src"/*.md; do
     [[ -f "$skill_file" ]] || continue
     skill_name="$(basename "$skill_file" .md)"
+    # Project-level: symlink
     mkdir -p "$cursor_skills/$skill_name"
     ln -sf "../../../_agents/skills/${skill_name}.md" "$cursor_skills/$skill_name/SKILL.md"
+    # Global-level: copy for cross-project discovery
+    mkdir -p "$global_skills/$skill_name"
+    cp "$skill_file" "$global_skills/$skill_name/SKILL.md"
   done
   log_success "Cursor skills linked: $cursor_skills"
+  log_success "Cursor skills synced to global: $global_skills"
 }
 
 write_hooks() {
