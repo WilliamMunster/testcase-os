@@ -121,6 +121,35 @@ Verify the connection:
 jira me
 ```
 
+### 5. Configure Confluence Integration (Optional)
+
+The `case-design` skill can query your Confluence knowledge base for related content. If not configured, this step will be skipped automatically.
+
+Edit `_system/config.yaml` to set your Confluence details:
+
+```yaml
+confluence:
+  base_url: "https://<YOUR_CONFLUENCE_HOST>/confluence"
+  space_key: "<YOUR_SPACE_KEY>"
+  token_env: "CONFLUENCE_API_TOKEN"
+```
+
+Set the API token in your shell profile:
+
+```bash
+echo 'export CONFLUENCE_API_TOKEN="<YOUR_TOKEN>"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Verify the connection:
+
+```bash
+curl -s -H "Authorization: Bearer $CONFLUENCE_API_TOKEN" \
+  "https://<YOUR_CONFLUENCE_HOST>/confluence/rest/api/content/search?cql=space=<YOUR_SPACE_KEY>&limit=1"
+```
+
+> If `CONFLUENCE_API_TOKEN` is empty or unset, skills will skip Confluence queries without error.
+
 ## Available Skills
 
 Instead of complex CLI flags, interact with your AI agents using natural language.

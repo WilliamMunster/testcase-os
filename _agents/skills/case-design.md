@@ -27,15 +27,19 @@ Follow these 6 steps precisely:
 
 ### 3. 查询 Confluence 知识 / Query Confluence Knowledge
 *   读取 `_system/config.yaml` 中的 `confluence` 配置。
+*   **前置检查**：如果 `$CONFLUENCE_API_TOKEN` 为空或未设置，或 `confluence.base_url` 为空，跳过本步骤，仅依赖本地 `knowledge/` 和 `experience/`。
 *   使用 Confluence REST API 搜索与当前 PRD 相关的知识页面：
 
 ```bash
-curl -s -H "Authorization: Bearer $CONFLUENCE_API_TOKEN" \
-  "{confluence.base_url}/rest/api/content/search?cql=space={confluence.space_key}+AND+text~'{关键词}'&limit=5&expand=body.view"
+if [ -z "$CONFLUENCE_API_TOKEN" ]; then
+  echo "CONFLUENCE_API_TOKEN not set, skipping Confluence query."
+else
+  curl -s -H "Authorization: Bearer $CONFLUENCE_API_TOKEN" \
+    "{confluence.base_url}/rest/api/content/search?cql=space={confluence.space_key}+AND+text~'{关键词}'&limit=5&expand=body.view"
+fi
 ```
 
 *   从返回结果中提取相关测试经验、已知问题、历史 bug 等信息。
-*   如果 Confluence 不可用或未配置，跳过此步骤，仅依赖本地 `knowledge/` 和 `experience/`。
 
 ### 4. 生成用例文件 / Generate Test Case File
 *   为每个 PRD 生成**单个** Markdown 文件：`cases/{module}/{JIRA-ID}-test-cases.md`
